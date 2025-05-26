@@ -4,13 +4,27 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.bc.androidperfbenchmark.ui.theme.AndroidPerfBenchmarkTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,10 +33,56 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidPerfBenchmarkTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                Column(
+                    modifier = Modifier
+                        .safeContentPadding()
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    LazyColumn {
+                        items(300) {
+                            TestRow()
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TestRow() {
+    val infiniteTransition = rememberInfiniteTransition()
+    val angle by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000, easing = LinearEasing)
+        )
+    )
+    LazyRow {
+        items(repeatedPictureList) { drawableRes ->
+            Box {
+                Image(
+                    painterResource(drawableRes),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(50.dp)
+                        .rotate(angle)
+                )
+            }
+        }
+    }
+}
+
+val pictureList = listOf(
+    R.drawable.image1,
+    R.drawable.image2,
+    R.drawable.image3,
+)
+
+val repeatedPictureList = buildList {
+    repeat(10) {
+        addAll(pictureList)
     }
 }
