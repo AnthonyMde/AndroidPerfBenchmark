@@ -37,6 +37,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bc.androidperfbenchmark.component.ImageBenchmark
 import com.bc.androidperfbenchmark.ui.theme.AndroidPerfBenchmarkTheme
 import kotlinx.coroutines.delay
 import kotlin.math.cos
@@ -61,9 +62,9 @@ class MainActivity : ComponentActivity() {
                         .background(Color.White),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-//                    ImageBenchmark()
+                    ImageBenchmark()
 //                    TextBenchmark()
-                    GridViewBenchmark()
+//                    GridViewBenchmark()
                 }
             }
         }
@@ -133,8 +134,8 @@ fun AnimatedCell(value: Int, rotation: Float, scale: Float) {
             .fillMaxWidth()
             .aspectRatio(1f)
             .graphicsLayer(
-//                rotationZ = rotation,
-                rotationX = rotation,
+                rotationZ = rotation,
+//                rotationX = rotation,
                 scaleX = scale,
                 scaleY = scale,
                 shadowElevation = 20f,

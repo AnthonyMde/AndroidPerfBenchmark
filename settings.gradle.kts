@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidPerfBenchmark"
 include(":app")
- 
+include(":benchmark")
